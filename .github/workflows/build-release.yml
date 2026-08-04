@@ -1,0 +1,68 @@
+name: Build & Publish Automotive APK Release
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Release GFlow APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Generate Static Debug/Test Keystore
+        run: |
+          keytool -genkeypair -v -keystore android/app/debug.keystore \
+            -storepass android -alias androiddebugkey -keypass android \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Signed Automotive Release APK
+        run: flutter build apk --release
+
+      - name: Prepare APK Asset
+        run: |
+          mkdir -p build/release-assets
+          cp build/app/outputs/flutter-apk/app-release.apk build/release-assets/gflow-monji-v1.0.0.apk
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
+        with:
+          tag_name: ${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
+          name: GFlow Monji Automotive Release ${{ github.ref_name }}
+          body: |
+            Automated Android Automotive OS Release Build (targetSdk 35, minSdk 30).
+            Signed with static debug/test key for update compatibility.
+          draft: false
+          prerelease: false
+          files: |
+            build/release-assets/gflow-monji-v1.0.0.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
