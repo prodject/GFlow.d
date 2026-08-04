@@ -4,6 +4,21 @@ plugins {
     id 'dev.flutter.flutter-gradle-plugin'
 }
 
+// Auto-create static debug.keystore if missing
+def keystoreFile = file("debug.keystore")
+if (!keystoreFile.exists()) {
+    try {
+        println "Generating static debug.keystore for GFlow build..."
+        def proc = ["keytool", "-genkeypair", "-v", "-keystore", keystoreFile.absolutePath,
+                    "-storepass", "android", "-alias", "androiddebugkey", "-keypass", "android",
+                    "-keyalg", "RSA", "-keysize", "2048", "-validity", "10000",
+                    "-dname", "CN=Android Debug,O=Android,C=US"].execute()
+        proc.waitFor()
+    } catch (Exception e) {
+        println "Could not auto-generate keystore: " + e.message
+    }
+}
+
 android {
     namespace "com.prodject.gflow"
     compileSdk 35
@@ -41,12 +56,12 @@ android {
 
     buildTypes {
         release {
-            signingConfig file("android/app/debug.keystore").exists() || file("debug.keystore").exists() ? signingConfigs.staticKey : signingConfigs.debug
+            signingConfig signingConfigs.staticKey
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            signingConfig file("android/app/debug.keystore").exists() || file("debug.keystore").exists() ? signingConfigs.staticKey : signingConfigs.debug
+            signingConfig signingConfigs.staticKey
         }
     }
 }

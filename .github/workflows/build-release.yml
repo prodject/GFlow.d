@@ -41,7 +41,6 @@ jobs:
           if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
             VERSION_NAME="${github.ref_name}"
           else
-            # Dynamic version for main commits: 1.<run_number> (e.g. 1.0, 1.1, 1.2...)
             RUN_NUM="${{ github.run_number }}"
             VERSION_NAME="v1.${RUN_NUM}"
           fi
@@ -50,6 +49,7 @@ jobs:
 
       - name: Generate Static Debug/Test Keystore
         run: |
+          mkdir -p android/app
           keytool -genkeypair -v -keystore android/app/debug.keystore \
             -storepass android -alias androiddebugkey -keypass android \
             -keyalg RSA -keysize 2048 -validity 10000 \
@@ -64,7 +64,6 @@ jobs:
       - name: Prepare Dynamic APK Asset
         run: |
           mkdir -p build/release-assets
-          APK_NAME="gflow-${ENV:VERSION_NAME}.apk"
           cp build/app/outputs/flutter-apk/app-release.apk "build/release-assets/gflow-${VERSION_NAME}.apk"
           echo "APK asset prepared: build/release-assets/gflow-${VERSION_NAME}.apk"
 
