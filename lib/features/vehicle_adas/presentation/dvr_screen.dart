@@ -3,7 +3,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/widgets/glass_card.dart';
 
-/// Monji DVR Dashcam Manager Screen.
+/// GFlow DVR Dashcam Manager Screen.
 class DvrScreen extends StatefulWidget {
   const DvrScreen({super.key});
 
@@ -20,7 +20,7 @@ class _DvrScreenState extends State<DvrScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.bgDark,
-      appBar: const CustomAppBar(title: 'Monji DVR Manager'),
+      appBar: const CustomAppBar(title: 'GFlow DVR Manager'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

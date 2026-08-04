@@ -12,7 +12,7 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 
 /**
- * DvrService: Background DVR video recording service for Monji DVR.
+ * DvrService: Background DVR video recording service for GFlow DVR.
  */
 public class DvrService extends Service {
 
@@ -23,21 +23,21 @@ public class DvrService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG, "Creating Monji DVR Service...");
+        Log.i(TAG, "Creating GFlow DVR Service...");
         createNotificationChannel();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Monji DVR Engine")
+                .setContentTitle("GFlow DVR Engine")
                 .setContentText("Background Dashcam Recording Active (1080p)")
                 .setSmallIcon(android.R.drawable.ic_menu_camera)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .build();
 
         startForeground(NOTIFICATION_ID, notification);
-        Log.i(TAG, "Monji DVR background recording loop active.");
+        Log.i(TAG, "GFlow DVR background recording loop active.");
 
         return START_STICKY;
     }
@@ -46,7 +46,7 @@ public class DvrService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
-                    "Monji DVR Service",
+                    "GFlow DVR Service",
                     NotificationManager.IMPORTANCE_LOW
             );
             NotificationManager manager = getSystemService(NotificationManager.class);

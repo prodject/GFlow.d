@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/glass_card.dart';
 
-/// Monji Desktop Launcher Hub (Custom Launcher & App Grid with OneOS Dock).
+/// GFlow Desktop Launcher Hub (Custom Launcher & App Grid with OneOS Dock).
 class DesktopScreen extends StatelessWidget {
   const DesktopScreen({super.key});
 
@@ -55,7 +55,7 @@ class DesktopScreen extends StatelessWidget {
                   children: [
                     _buildAppTile(context, Icons.navigation, 'Navigation', AppTheme.accentCyan),
                     _buildAppTile(context, Icons.music_note, 'Yandex Music', AppTheme.accentOrange),
-                    _buildAppTile(context, Icons.videocam, 'Monji DVR', AppTheme.accentRed),
+                    _buildAppTile(context, Icons.videocam, 'GFlow DVR', AppTheme.accentRed),
                     _buildAppTile(context, Icons.directions_car, 'Vehicle Control', AppTheme.accentBlue),
                     _buildAppTile(context, Icons.shield, 'ADAS Safety', AppTheme.accentGreen),
                     _buildAppTile(context, Icons.mic, 'Vosk Voice', AppTheme.accentCyan),

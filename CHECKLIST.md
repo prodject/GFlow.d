@@ -1,4 +1,4 @@
-# CHECKLIST — Чек-лист готовности функционала GFlow / GControl (Monji)
+# CHECKLIST — Чек-лист готовности функционала GFlow / GControl
 
 ## 1. Конфигурация Проекта & Target SDK 35
 - [x] Целевая платформа: Android Automotive OS (Geely OneOS, ECARX, Zeekr)
@@ -24,7 +24,7 @@
 - [x] `AppWatchdogAccessibilityService.java` (Autozoom DPI масштабирование)
 - [x] `BootReceiver.java` (Автозапуск при загрузке ГУ)
 - [x] `SteeringWheelReceiver.java` (Перехват кнопок мультируля Geely/ECARX)
-- [x] `VoiceTriggerReceiver.java` (Интент-триггер голоса `app.monji.VOICE`)
+- [x] `VoiceTriggerReceiver.java` (Интент-триггер голоса `com.prodject.gflow.VOICE`)
 - [x] `DiagnosticsAutomationReceiver.java` (Вещание диагноста)
 - [x] `SplitCommandReceiver.java` (Управление Split Screen)
 

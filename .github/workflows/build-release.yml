@@ -49,20 +49,20 @@ jobs:
       - name: Prepare APK Asset
         run: |
           mkdir -p build/release-assets
-          cp build/app/outputs/flutter-apk/app-release.apk build/release-assets/gflow-monji-v1.0.0.apk
+          cp build/app/outputs/flutter-apk/app-release.apk build/release-assets/gflow-v1.0.0.apk
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
         with:
           tag_name: ${{ github.ref_name == 'main' && 'latest' || github.ref_name }}
-          name: GFlow Monji Automotive Release ${{ github.ref_name }}
+          name: GFlow Automotive Release ${{ github.ref_name }}
           body: |
             Automated Android Automotive OS Release Build (targetSdk 35, minSdk 30).
             Signed with static debug/test key for update compatibility.
           draft: false
           prerelease: false
           files: |
-            build/release-assets/gflow-monji-v1.0.0.apk
+            build/release-assets/gflow-v1.0.0.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

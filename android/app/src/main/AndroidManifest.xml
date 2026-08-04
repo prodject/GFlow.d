@@ -21,7 +21,7 @@
 
     <application
         android:name="${applicationName}"
-        android:label="GFlow Monji"
+        android:label="GFlow"
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:hardwareAccelerated="true">
@@ -115,7 +115,7 @@
             android:name=".receivers.VoiceTriggerReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="app.monji.VOICE" />
+                <action android:name="com.prodject.gflow.VOICE" />
             </intent-filter>
         </receiver>
 

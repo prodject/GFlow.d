@@ -1,8 +1,8 @@
-# WALKTHROUGH — Обзор реализации GFlow / GControl (Monji)
+# WALKTHROUGH — Обзор реализации GFlow / GControl
 
 ## Описание проекта
-Приложение **GFlow / GControl (Monji)** разработано для головных устройств на базе **Android Automotive OS (Geely OneOS, ECARX, Zeekr)**.
-Архитектура сочетает единый Android Host приложение (`com.prodject.gflow`, `minSdk 30`, `compileSdk 35`, `targetSdk 35`) и высокопроизводительный **Flutter UI** в стиле **Tesla / OneOS Dark Glassmorphism**.
+Приложение **GFlow / GControl** разработано для головных устройств на базе **Android Automotive OS (Geely OneOS, ECARX, Zeekr)**.
+Архитектура сочетает единый Android Host приложение (`com.prodject.gflow`, `minSdk 30`, `compileSdk 35`, `targetSdk 35`) и высокопроизводительный **Flutter UI** в стиле **Tesla / OneOS Dark Glassmorphic Theme**.
 
 ---
 
@@ -12,6 +12,7 @@
 GFlow/
 ├── pubspec.yaml
 ├── analysis_options.yaml
+├── README.md
 ├── WALKTHROUGH.md
 ├── CHECKLIST.md
 ├── android/
@@ -103,7 +104,7 @@ GFlow/
 
 ### 2. Фоновые службы и приёмники
 - **`VoiceForegroundService.java` & `VoiceFlowRouter.java`**: Поддержка офлайн-распознавателя речи Vosk.
-- **`DvrService.java`**: Фоновая запись видеорегистратора Monji DVR.
+- **`DvrService.java`**: Фоновая запись видеорегистратора GFlow DVR.
 - **`LowSpeedCameraService.java`**: Авто-вывод камер AVM 360 при скорости < 15 км/ч.
 - **`AppWatchdogAccessibilityService.java`**: Масштабирование DPI (Autozoom).
 - **`GFlowMediaSessionListener.java`**: Перехват метаданных активных плееров.

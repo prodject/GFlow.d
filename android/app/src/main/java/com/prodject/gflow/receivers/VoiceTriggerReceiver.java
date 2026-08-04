@@ -13,7 +13,7 @@ import com.prodject.gflow.services.VoiceForegroundService;
 public class VoiceTriggerReceiver extends BroadcastReceiver {
 
     private static final String TAG = "VoiceTriggerReceiver";
-    public static final String ACTION_VOICE_TRIGGER = "app.monji.VOICE";
+    public static final String ACTION_VOICE_TRIGGER = "com.prodject.gflow.VOICE";
 
     @Override
     public void onReceive(Context context, Intent intent) {

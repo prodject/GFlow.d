@@ -23,7 +23,7 @@ class GFlowAutomotiveApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GFlow Monji',
+      title: 'GFlow',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       home: const DashboardScreen(),
@@ -170,7 +170,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           const SizedBox(height: 12),
                           _buildStatusCard(
-                            title: 'Monji DVR',
+                            title: 'GFlow DVR',
                             subtitle: 'REC 1080p | 48GB Free',
                             icon: Icons.videocam_outlined,
                             accentColor: AppTheme.accentOrange,

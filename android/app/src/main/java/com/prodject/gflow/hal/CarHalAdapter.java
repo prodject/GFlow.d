@@ -3,7 +3,7 @@ package com.prodject.gflow.hal;
 import java.util.Map;
 
 /**
- * Abstract Vehicle HAL Adapter interface for GFlow / GControl (Monji).
+ * Abstract Vehicle HAL Adapter interface for GFlow / GControl.
  * Provides low-level control over Climate, Body, ADAS, and telemetry signals.
  */
 public interface CarHalAdapter {

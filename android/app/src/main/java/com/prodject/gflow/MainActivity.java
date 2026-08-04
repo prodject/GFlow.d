@@ -11,7 +11,7 @@ import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 
 /**
- * MainActivity for GFlow / GControl (Monji).
+ * MainActivity for GFlow / GControl.
  */
 public class MainActivity extends FlutterActivity {
 

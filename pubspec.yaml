@@ -1,5 +1,5 @@
 name: gflow
-description: "Gflow / GControl (Monji) Automotive App for Android Automotive OS (Geely OneOS, ECARX, Zeekr)"
+description: "Gflow / GControl Automotive App for Android Automotive OS (Geely OneOS, ECARX, Zeekr)"
 publish_to: 'none'
 
 version: 1.0.0+1

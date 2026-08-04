@@ -43,7 +43,7 @@ class VoiceScreen extends StatelessWidget {
                     _AliasTile(phrase: '"Включи климат"', action: 'HVAC Power ON'),
                     _AliasTile(phrase: '"Согрей салон"', action: 'Temp 24.5°C + Seat Heating'),
                     _AliasTile(phrase: '"Закрой двери"', action: 'Central Door Lock'),
-                    _AliasTile(phrase: '"Включи запись"', action: 'Monji DVR Capture'),
+                    _AliasTile(phrase: '"Включи запись"', action: 'GFlow DVR Capture'),
                   ],
                 ),
               ),
