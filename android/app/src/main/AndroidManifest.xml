@@ -2,87 +2,82 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.prodject.gflow">
 
-    <!-- Android Automotive OS Features & Permissions -->
+    <!-- Automotive OS Capabilities -->
     <uses-feature android:name="android.hardware.type.automotive" android:required="true" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature android:name="android.hardware.wifi" android:required="false" />
+    <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
 
+    <!-- System & Hardware Permissions -->
+    <uses-permission android:name="android.car.permission.CAR_CLIMATE" />
+    <uses-permission android:name="android.car.permission.CAR_CABIN" />
+    <uses-permission android:name="android.car.permission.CAR_SPEED" />
+    <uses-permission android:name="android.car.permission.CAR_INFO" />
+    <uses-permission android:name="android.car.permission.CAR_ENERGY" />
+    <uses-permission android:name="android.car.permission.CAR_NAVIGATION_MANAGER" />
+    
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE" />
 
     <application
-        android:name="${applicationName}"
-        android:label="GFlow"
-        android:icon="@mipmap/ic_launcher"
-        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:label="GFlow Automotive"
+        android:icon="@android:drawable/sym_def_app_icon"
+        android:allowBackup="true"
+        android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
         android:hardwareAccelerated="true">
 
-        <!-- Main Dashboard & Launcher Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
-
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
+                <category android:name="android.intent.category.CAR_LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Services -->
-        <service
-            android:name=".services.VoiceForegroundService"
-            android:foregroundServiceType="microphone"
+        <!-- Background Automotive Services -->
+        <service 
+            android:name=".service.VoiceForegroundService" 
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+            
+        <service 
+            android:name=".service.DvrService" 
+            android:exported="false"
+            android:foregroundServiceType="camera" />
+            
+        <service 
+            android:name=".service.CameraForegroundService" 
+            android:exported="false"
+            android:foregroundServiceType="camera" />
+            
+        <service 
+            android:name=".service.LowSpeedCameraService" 
+            android:exported="false" />
+            
+        <service 
+            android:name=".service.GFlowMediaSessionListener" 
             android:exported="false" />
 
         <service
-            android:name=".services.DvrService"
-            android:foregroundServiceType="camera"
-            android:exported="false" />
-
-        <service
-            android:name=".services.CameraForegroundService"
-            android:foregroundServiceType="camera"
-            android:exported="false" />
-
-        <service
-            android:name=".services.LowSpeedCameraService"
-            android:exported="false" />
-
-        <service
-            android:name=".services.GFlowMediaSessionListener"
-            android:label="GFlow Media Interceptor"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
-
-        <service
-            android:name=".services.AppWatchdogAccessibilityService"
-            android:label="GFlow Autozoom Watchdog"
+            android:name=".service.AppWatchdogAccessibilityService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="true">
             <intent-filter>
@@ -91,47 +86,33 @@
         </service>
 
         <!-- Broadcast Receivers -->
-        <receiver
-            android:name=".receivers.BootReceiver"
-            android:exported="true">
+        <receiver android:name=".receiver.BootReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
             </intent-filter>
         </receiver>
 
-        <receiver
-            android:name=".receivers.SteeringWheelReceiver"
-            android:exported="true">
+        <receiver android:name=".receiver.SteeringWheelReceiver" android:exported="true">
             <intent-filter>
-                <action android:name="com.ecarx.intent.action.STEERING_KEY" />
-                <action android:name="com.geely.intent.action.STEERING_KEY" />
+                <action android:name="com.prodject.gflow.STEERING_KEY" />
             </intent-filter>
         </receiver>
 
-        <receiver
-            android:name=".receivers.VoiceTriggerReceiver"
-            android:exported="true">
+        <receiver android:name=".receiver.VoiceTriggerReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="com.prodject.gflow.VOICE" />
             </intent-filter>
         </receiver>
 
-        <receiver
-            android:name=".receivers.DiagnosticsAutomationReceiver"
-            android:exported="true">
+        <receiver android:name=".receiver.DiagnosticsAutomationReceiver" android:exported="true">
             <intent-filter>
-                <action android:name="com.prodject.gflow.ACTION_DIAGNOSTICS" />
+                <action android:name="com.prodject.gflow.RUN_DIAGNOSTICS" />
             </intent-filter>
         </receiver>
 
-        <receiver
-            android:name=".receivers.SplitCommandReceiver"
-            android:exported="true">
+        <receiver android:name=".receiver.SplitCommandReceiver" android:exported="true">
             <intent-filter>
-                <action android:name="com.prodject.gflow.ACTION_TOGGLE_SPLIT" />
+                <action android:name="com.prodject.gflow.SPLIT_COMMAND" />
             </intent-filter>
         </receiver>
 
