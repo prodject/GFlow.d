@@ -18,8 +18,8 @@ class DesktopScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
+                children: const [
+                  Text(
                     '14:35',
                     style: TextStyle(
                       fontSize: 36,
@@ -28,9 +28,9 @@ class DesktopScreen extends StatelessWidget {
                     ),
                   ),
                   GlassCard(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Row(
-                      children: const [
+                      children: [
                         Icon(Icons.wb_sunny, color: AppTheme.accentOrange, size: 24),
                         SizedBox(width: 8),
                         Text(
