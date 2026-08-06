@@ -4,6 +4,14 @@ plugins {
     id 'dev.flutter.flutter-gradle-plugin'
 }
 
+def resolvedVersionCode = (System.getenv("VERSION_CODE") ?: System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInteger()
+def resolvedVersionName = System.getenv("VERSION_NAME") ?: "1.0"
+def releaseKeystorePath = System.getenv("RELEASE_KEYSTORE_PATH")
+def releaseKeystorePassword = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+def releaseKeyAlias = System.getenv("RELEASE_KEY_ALIAS")
+def releaseKeyPassword = System.getenv("RELEASE_KEY_PASSWORD")
+def hasReleaseSigning = releaseKeystorePath && releaseKeystorePassword && releaseKeyAlias && releaseKeyPassword
+
 android {
     namespace "com.prodject.gflow"
     compileSdk 35
@@ -18,23 +26,12 @@ android {
         jvmTarget = '17'
     }
 
-    signingConfigs {
-        staticKey {
-            storeFile file("debug.keystore")
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
-            v1SigningEnabled true
-            v2SigningEnabled true
-        }
-    }
-
     defaultConfig {
         applicationId "com.prodject.gflow"
         minSdk 30
         targetSdk 35
-        versionCode 1
-        versionName "1.0.0"
+        versionCode resolvedVersionCode
+        versionName resolvedVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
@@ -42,14 +39,41 @@ android {
         }
     }
 
+    signingConfigs {
+        staticDebugKey {
+            storeFile file("debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+        if (hasReleaseSigning) {
+            release {
+                storeFile file(releaseKeystorePath)
+                storePassword releaseKeystorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+                v1SigningEnabled true
+                v2SigningEnabled true
+            }
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig signingConfigs.staticKey
+            signingConfig hasReleaseSigning ? signingConfigs.release : signingConfigs.staticDebugKey
             minifyEnabled false
             shrinkResources false
         }
         debug {
-            signingConfig signingConfigs.staticKey
+            signingConfig hasReleaseSigning ? signingConfigs.release : signingConfigs.staticDebugKey
+        }
+    }
+
+    packaging {
+        jniLibs {
+            pickFirsts += ["**/libvosk.so"]
         }
     }
 }
