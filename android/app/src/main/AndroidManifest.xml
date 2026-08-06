@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.prodject.gflow">
 
-    <!-- Automotive OS Capabilities -->
-    <uses-feature android:name="android.hardware.type.automotive" android:required="true" />
+    <!-- Automotive OS Capabilities (Optional so APK installs on standard Android and Automotive devices) -->
+    <uses-feature android:name="android.hardware.type.automotive" android:required="false" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
     <uses-feature android:name="android.hardware.wifi" android:required="false" />

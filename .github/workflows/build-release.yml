@@ -47,14 +47,6 @@ jobs:
           echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
           echo "Determined Version Name: ${VERSION_NAME}"
 
-      - name: Generate Static Debug/Test Keystore
-        run: |
-          mkdir -p android/app
-          keytool -genkeypair -v -keystore android/app/debug.keystore \
-            -storepass android -alias androiddebugkey -keypass android \
-            -keyalg RSA -keysize 2048 -validity 10000 \
-            -dname "CN=Android Debug,O=Android,C=US"
-
       - name: Install Dependencies
         run: flutter pub get
 
@@ -76,7 +68,7 @@ jobs:
           body: |
             Automated Android Automotive OS Release Build (${{ env.VERSION_NAME }}).
             Target SDK 35, Min SDK 30.
-            Signed with static debug/test key for update compatibility.
+            Signed with static debug/test key stored in repository for update compatibility.
           draft: false
           prerelease: false
           files: |
