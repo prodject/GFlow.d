@@ -89,6 +89,7 @@ jobs:
             Signed with static release/debug key for update compatibility.
           files: |
             build/release-assets/GFlow-${{ steps.version.outputs.version_name }}.apk
+          overwrite: true
           prerelease: false
           make_latest: true
         env:
